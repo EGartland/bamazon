@@ -73,11 +73,11 @@ var appStart = function() {
         console.log('---------------------------------\n');
         
             var table = new Table({
-                head: ['ItemID', 'ProductName', 'Price', 'Quantity'],
-                colWidths: [10, 40, 10, 10]
+                head: ['ItemID', 'ProductName', 'Department Name', 'Price', 'Quantity'],
+                colWidths: [10, 75, 20, 10, 10]
             });
         for (var i=0; i < res.length; i++) {
-        var productArray = [res[i].ItemID, res[i].ProductName, res[i].Price, res[i].StockQuantity];
+        var productArray = [res[i].ItemID, res[i].ProductName, res [i].DepartmentName, res[i].Price, res[i].StockQuantity];
         table.push(productArray);    
         }
         console.log(table.toString());
@@ -92,12 +92,12 @@ var appStart = function() {
         console.log('---------------------------------\n');
        
             var table = new Table({
-                head: ['ItemID', 'ProductName', 'Price', 'Quantity'],
-                colWidths: [10, 40, 10, 10]
+                head: ['ItemID', 'ProductName', 'Department Name', 'Price', 'Quantity'],
+                colWidths: [10, 75, 20, 10, 10]
             });
         for (var i=0; i < res.length; i++) {
             if (res[i].StockQuantity < 5) {
-            var productArray = [res[i].ItemID, res[i].ProductName, res[i].Price, res[i].StockQuantity];
+            var productArray = [res[i].ItemID, res[i].ProductName, res[i].DepartmentName, res[i].Price, res[i].StockQuantity];
             table.push(productArray);
             }
         }
