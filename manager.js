@@ -1,8 +1,8 @@
-// Node npm var declarations
 var mysql = require('mysql');
 var inquirer = require('inquirer');
 var Table = require('cli-table');
-//creates a connection to MySQL database
+
+
 var connection = mysql.createConnection({
     host: 'localhost',
     port: 3306,
@@ -10,7 +10,7 @@ var connection = mysql.createConnection({
     password: 'Blink182',
     database: 'Bamazon'
 });
-//Provides status of SQL connection
+
 connection.connect(function(err) {
     if (err) throw err;
     console.log('connected as id' + connection.threadId);
@@ -21,7 +21,7 @@ console.log('------------------------------------------------');
 console.log('Welcome to the Bamazon management interface');
 console.log('------------------------------------------------\n');
 
-//builds startup menu for manangement interface
+
 var appStart = function() {
     inquirer.prompt([{
         name: "Menu",
@@ -45,11 +45,11 @@ var appStart = function() {
                 case 'Add New Product':
                     newProduct();
                     break;
-            } // end of switch
+            } 
 
-        }); // end of inquirer prompt function
+        }); 
 }  
-    //Function to prompt user if they want to continue or end connection
+    
     function appContinue() {
     inquirer.prompt({
                 name: "continue",
@@ -71,7 +71,7 @@ var appStart = function() {
         console.log('---------------------------------');
         console.log('Bamazon Current Inventory');
         console.log('---------------------------------\n');
-        // New Table instance to format returned sql data
+        
             var table = new Table({
                 head: ['ItemID', 'ProductName', 'Price', 'Quantity'],
                 colWidths: [10, 40, 10, 10]
@@ -84,13 +84,13 @@ var appStart = function() {
         appStart();
         });
     }
-    //List the Products and then filters based on inventory < 5
+    
     function lowInventory() {
     connection.query('SELECT * FROM Products', function(err, res) {
         console.log('---------------------------------');
         console.log('Bamazon Low Inventory');
         console.log('---------------------------------\n');
-        // New Table instance to format returned sql data
+       
             var table = new Table({
                 head: ['ItemID', 'ProductName', 'Price', 'Quantity'],
                 colWidths: [10, 40, 10, 10]
@@ -105,10 +105,10 @@ var appStart = function() {
         appStart();
         });
     }
-    //Function to add inventory to database
+    
     function addInventory() {
         connection.query('SELECT * FROM Products', function(err, res) {
-        // New Table instance to format returned sql data
+        
             var table = new Table({
                 head: ['ItemID', 'Product Name', 'Department Name', 'Price', 'Quantity'],
                 colWidths: [10, 75, 20, 10, 10]
@@ -131,14 +131,14 @@ var appStart = function() {
                 message: 'Enter the quantity you want to add to inventory'
             }]).then(function(answer) {
                 var addAmount = (parseInt(answer.qty));
-                //Queries the database to retrieve the current StockQuantity to perform the addition
+                
                 connection.query("SELECT * FROM Products WHERE ?", [{ItemID: answer.ItemID}], function(err, res) {
                             if(err) {
                                 throw err;
                             } else {
                             var updateQty = (parseInt(res[0].StockQuantity) + addAmount);                      
                             }
-                    //Updates the database with new quantity
+                    
                     connection.query('UPDATE products SET StockQuantity = ? WHERE ItemID = ?', [updateQty, answer.ItemID], function(err, results) {
                             if(err) {
                                 throw err;
